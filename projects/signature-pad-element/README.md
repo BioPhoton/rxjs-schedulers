@@ -11,6 +11,8 @@
 In App component
 
 3. change app.component to 
+
+```typescript
 @Component({
   selector: 'app-element',
   template: `<h1>I'm a webcomponent</h1>`,
@@ -19,8 +21,11 @@ In App component
 export class AppComponent {
 
 }
+```
 
 4. change app.module.ts to:
+
+```typescript
 @NgModule({
   imports: [BrowserModule],
   declarations: [AppComponent],
@@ -33,6 +38,7 @@ export class AppModule {
   }
   ngDoBootstrap() { }
 }
+```
 
 6. add polifill to polifill.ts of my-element
 import './build/document-register-element.js';
