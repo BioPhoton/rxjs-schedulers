@@ -3,14 +3,14 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "rx-schedulers": {
+    "rxjs-schedulers": {
       "root": "",
       "projectType": "application",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/rx-schedulers",
+            "outputPath": "dist/rxjs-schedulers",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,7 +25,8 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
-              }
+              },
+              "src/manifest.json"
             ],
             "styles": [
               {
@@ -53,25 +54,26 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "serviceWorker": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rx-schedulers:build"
+            "browserTarget": "rxjs-schedulers:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rx-schedulers:build:production"
+              "browserTarget": "rxjs-schedulers:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rx-schedulers:build"
+            "browserTarget": "rxjs-schedulers:build"
           }
         },
         "test": {
@@ -100,7 +102,8 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
-              }
+              },
+              "src/manifest.json"
             ]
           }
         },
@@ -118,7 +121,7 @@
         }
       }
     },
-    "rx-schedulers-e2e": {
+    "rxjs-schedulers-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -126,7 +129,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "rx-schedulers:serve"
+            "devServerTarget": "rxjs-schedulers:serve"
           }
         },
         "lint": {
