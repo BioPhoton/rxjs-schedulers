@@ -59,7 +59,7 @@ export class SignatureSchedulingComponent {
 
   }
 
-  drawSignature(showImmediately) {
+  drawSignature(showImmediately?: boolean) {
     // get scheduler
     const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
     // get values for animation
