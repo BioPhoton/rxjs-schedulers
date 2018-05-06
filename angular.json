@@ -26,7 +26,11 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
-              "src/manifest.json"
+              {
+                "glob": "manifest.json",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": [
               {
@@ -103,6 +107,7 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
+              "src/manifest.json",
               "src/manifest.json"
             ]
           }

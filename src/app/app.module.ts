@@ -7,6 +7,8 @@ import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
 import {AngularSignaturePadModule} from './libs/signature-pad/angular-signature-pad.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import {AngularSignaturePadModule} from './libs/signature-pad/angular-signature-
       {
         preloadingStrategy: PreloadAllModules
       }
-    )
+    ),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
