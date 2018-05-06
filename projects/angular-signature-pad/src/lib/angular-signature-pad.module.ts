@@ -14,11 +14,15 @@ export {consistOfObjects} from './validators/constists-of-object.validation';
 export {minLines} from './validators/min-lines.validation';
 export {minPointsInEachNLines} from './validators/min-points-in-each-n-lines.validator';
 
-const DECLARATIONS = [SignaturePadComponent, SignaturePadControlComponent, ObjToArrayPipe];
+const COMPONENTS = [SignaturePadComponent, SignaturePadControlComponent];
+const PIPES = [ObjToArrayPipe];
+const DECLARATIONS = [COMPONENTS, PIPES];
+const EXPORTS = [DECLARATIONS];
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule],
   declarations: [DECLARATIONS],
-  exports: [DECLARATIONS]
+  entryComponents: [COMPONENTS],
+  exports: [EXPORTS]
 })
 export class AngularSignaturePadModule {
   static forRoot(): ModuleWithProviders {

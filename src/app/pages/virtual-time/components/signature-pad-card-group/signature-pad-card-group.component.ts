@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl} from '@angular/forms';
-import {SignaturePadControlComponent} from '../../../../libs/signature-pad/components/signature-pad-control/signature-pad-control.component';
+import {SignaturePadControlComponent} from 'angular-signature-pad';
 
 @Component({
   selector: 'signature-pad-card-group',

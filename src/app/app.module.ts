@@ -6,9 +6,9 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
-import {AngularSignaturePadModule} from './libs/signature-pad/angular-signature-pad.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {AngularSignaturePadModule} from 'angular-signature-pad';
 
 @NgModule({
   declarations: [

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SignatureSchedulingComponent} from './signature-scheduling.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {AngularSignaturePadModule} from '../../libs/signature-pad/angular-signature-pad.module';
+import {AngularSignaturePadModule} from 'angular-signature-pad';
 import {RouterModule} from '@angular/router';
 import {
   MatButtonModule, MatCardModule,
