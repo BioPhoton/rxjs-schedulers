@@ -1,0 +1,49 @@
+<h2 class="mat-h2">
+  AnimationFrame demo
+</h2>
+
+<form [formGroup]="form">
+  <mat-form-field class="example-full-width">
+    <input type="number" placeholder="Interval delay" matInput
+      formControlName="delay"/>
+  </mat-form-field>
+</form>
+
+<br/>
+
+<div class="center">
+  <div class="wrap" [ngStyle]="{transform: 'rotate('+circleRedDeg + 'deg)'}">
+    <div class="circle red"></div>
+  </div>
+  <div class="wrap" [ngStyle]="{transform: 'rotate('+circleGreenDeg + 'deg)'}">
+    <div class="circle green"></div>
+  </div>
+  <div class="wrap" [ngStyle]="{transform: 'rotate('+circleBlueDeg + 'deg)'}">
+    <div class="circle blue"></div>
+  </div>
+</div>
+<br/>
+
+<div class="button-row">
+  <button
+    mat-raised-button
+    class="input-group-text"
+    type="submit" (click)="toggleTick()">
+    isTicking
+  </button>
+  <button
+    mat-raised-button
+    class="input-group-text"
+    type="submit" (click)="resetDistance()">
+    Reset
+  </button>
+</div>
+
+<br/>
+
+
+<div class="legend">
+  <span class="circle red"></span> DefaultScheduler<br/>
+  <span class="circle green"></span> AsyncScheduler<br/>
+  <span class="circle blue"></span> AnimationFrameScheduler<br/>
+</div>

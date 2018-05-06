@@ -1,0 +1,31 @@
+<h2 class="mat-h2">Signatures</h2>
+
+<form [formGroup]="form" class="row">
+  <mat-grid-list cols="2">
+    <mat-grid-tile>
+      <signature-pad-card-group
+        [group]="form"
+        [config]="recordConfig">
+      </signature-pad-card-group>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <signature-pad-card-group
+        [group]="form"
+        [config]="animateConfig">
+      </signature-pad-card-group>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="button-row">
+    <button mat-raised-button color="accent" type="reset">
+      Reset
+    </button>
+    <button mat-raised-button color="primary" type="button"
+      (click)="drawSignature()">
+      AnimationFrameScheduler
+    </button>
+    <button mat-raised-button color="primary" type="button"
+      (click)="drawSignature(true)">
+      VirtualTimeScheduler
+    </button>
+  </div>
+</form>

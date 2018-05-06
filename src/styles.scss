@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "app/libs/signature-pad/styles.scss";
+
+body { margin: 0; }
+
+.main-content {
+  padding: 20px 50px 50px 20px;
+}
+
+.button-row {
+  display: flex;
+  button {
+    margin-right: 5px;
+    float: left;
+  }
+}

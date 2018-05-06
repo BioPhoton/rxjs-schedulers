@@ -1,0 +1,23 @@
+<mat-card class="signature-pad-card" [ngClass]="theme" [formGroup]="group">
+  <mat-card-title>
+    <h2 class="mat-h3">
+      <!-- initial message -->
+      <span *ngIf="control?.untouched && control?.pristine">
+        {{config?.msg?.initial || 'Sign here'}}
+      </span>
+
+      <!-- valid message -->
+      <span *ngIf="control?.dirty && control.valid">Thank you!</span>
+
+    </h2>
+  </mat-card-title>
+  <mat-card-content class="signature-pad">
+      <signature-pad-control [formControlName]="config.name" #signaturePad>
+      </signature-pad-control>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button class="clear" (click)="clear()">
+      {{'Clear Signature'}}
+    </button>
+  </mat-card-actions>
+</mat-card>

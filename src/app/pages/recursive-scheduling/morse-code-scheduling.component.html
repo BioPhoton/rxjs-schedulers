@@ -1,0 +1,19 @@
+<div class="morse-signal">
+  <h1 *ngIf="isPlaying$ | async">😮</h1>
+  <h1 *ngIf="!(isPlaying$ | async)">😐</h1>
+</div>
+<p>
+  <morse-frame [signal]="'$'"></morse-frame>
+  <morse-frame [signal]="signal" signalType="character" *ngFor="let signal of initialState">
+  </morse-frame>
+</p>
+<form [formGroup]="form" (submit)="decode(form.value)">
+
+  <mat-form-field class="example-full-width">
+    <textarea matInput placeholder="Alphabetic text"
+      formControlName="text">
+    </textarea>
+  </mat-form-field>
+  <br/>
+  <button mat-raised-button class="input-group-text" type="submit">Decode</button>
+</form>
