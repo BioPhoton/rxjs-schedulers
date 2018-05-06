@@ -11,7 +11,7 @@ import {
   Output,
   Renderer2,
   SimpleChanges,
-  ViewChild
+  ViewChild, ViewEncapsulation
 } from '@angular/core';
 import SignaturePad from 'signature_pad';
 import {ISignaturePadConfig} from '../../interfaces/signature-pad-config.interface';
@@ -28,7 +28,8 @@ import {GlobalSignaturePadConfig} from '../../tokens/global-config.token';
       #signatureCanvas>
     </canvas>
   `,
-  styleUrls: ['../../styles.scss']
+  styleUrls: ['../../styles.scss'],
+  encapsulation: ViewEncapsulation.Native
 })
 export class SignaturePadComponent implements OnInit, OnChanges, AfterViewInit {
 

@@ -9,7 +9,7 @@ import {
   OnInit,
   Optional,
   Renderer2,
-  SkipSelf
+  SkipSelf, ViewEncapsulation
 } from '@angular/core';
 import {
   ControlContainer,
@@ -38,7 +38,8 @@ import {SignaturePadComponent} from '../signature-pad/signature-pad.component';
       useExisting: forwardRef(() => SignaturePadControlComponent),
       multi: true
     }
-  ]
+  ],
+  encapsulation: ViewEncapsulation.Native
 })
 export class SignaturePadControlComponent extends SignaturePadComponent implements OnChanges, OnInit, AfterViewInit, ControlValueAccessor {
 

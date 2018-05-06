@@ -27,3 +27,4 @@ export * from './lib/components/signature-pad-control/signature-pad-control.comp
 
 // modules
 export * from './lib/angular-signature-pad.module';
+// export * from './lib/angular-signature-pad.element.module';

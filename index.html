@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Element test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="javascript" src="app-element.js"></script>
+</head>
+<body>
+
+<app-element></app-element>
+
+<script>
+  const button = document.querySelector('app-element');
+  button.addEventListener('action', (event) => {
+    console.log(`"action" emitted: ${event.detail}`);
+  });
+
+  console.log('init done');
+
+</script>
+</body>
+</html>

@@ -8,7 +8,6 @@ import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {AngularSignaturePadModule} from 'angular-signature-pad';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import {AngularSignaturePadModule} from 'angular-signature-pad';
     BrowserAnimationsModule,
     CoreModule.forRoot(),
     LayoutModule,
-    AngularSignaturePadModule.forRoot(),
     RouterModule.forRoot(
       [
         {
@@ -34,11 +32,12 @@ import {AngularSignaturePadModule} from 'angular-signature-pad';
           path: 'recursive-scheduling',
           loadChildren: './pages/recursive-scheduling/recursive-scheduling.module#RecursiveSchedulingModule'
         },
+        /*
         {
           path: 'virtual-time-scheduling',
           loadChildren: './pages/virtual-time/virtual-time.module#VirtualTimeModule'
         },
-        /*
+
          {
          path: 'test',
          component: TestSchedulerComponent
