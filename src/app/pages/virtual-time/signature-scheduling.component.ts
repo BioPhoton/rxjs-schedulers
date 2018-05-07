@@ -23,6 +23,7 @@ import {
 
     .row .col {
       width: 50%;
+      padding: 10px;
     }
 
     .animation-progress {

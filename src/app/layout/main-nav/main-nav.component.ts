@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'main-nav',
+  selector: 'main-nav-layout',
   templateUrl: './main-nav.component.html',
   styles: [`.sidenav-content {height: calc(100vh);}`]
 })

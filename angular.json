@@ -170,29 +170,29 @@
         }
       }
     },
-    "signature-pad-element": {
-      "root": "projects/signature-pad-element/",
-      "sourceRoot": "projects/signature-pad-element/src",
+    "elements": {
+      "root": "projects/elements/",
+      "sourceRoot": "projects/elements/src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "hm",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/signature-pad-element",
-            "index": "projects/signature-pad-element/src/index.html",
-            "main": "projects/signature-pad-element/src/main.ts",
-            "polyfills": "projects/signature-pad-element/src/polyfills.ts",
-            "tsConfig": "projects/signature-pad-element/tsconfig.app.json",
+            "outputPath": "dist/elements",
+            "index": "projects/elements/src/index.html",
+            "main": "projects/elements/src/main.ts",
+            "polyfills": "projects/elements/src/polyfills.ts",
+            "tsConfig": "projects/elements/tsconfig.app.json",
             "assets": [
               {
-                "glob": "signature-pad-element/src/favicon.ico",
+                "glob": "elements/src/favicon.ico",
                 "input": "projects",
                 "output": "/"
               },
               {
-                "glob": "signature-pad-element/src/assets",
+                "glob": "elements/src/assets",
                 "input": "projects",
                 "output": "/"
               }
@@ -201,7 +201,7 @@
               {
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
-              "projects/signature-pad-element/src/styles.css"
+              "projects/elements/src/styles.css"
             ],
             "scripts": []
           },
@@ -209,8 +209,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/signature-pad-element/src/environments/environment.ts",
-                  "with": "projects/signature-pad-element/src/environments/environment.prod.ts"
+                  "replace": "projects/elements/src/environments/environment.ts",
+                  "with": "projects/elements/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -228,34 +228,34 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "signature-pad-element:build"
+            "browserTarget": "elements:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "signature-pad-element:build:production"
+              "browserTarget": "elements:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "signature-pad-element:build"
+            "browserTarget": "elements:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/signature-pad-element/src/test.ts",
-            "polyfills": "projects/signature-pad-element/src/polyfills.ts",
-            "tsConfig": "projects/signature-pad-element/tsconfig.spec.json",
-            "karmaConfig": "projects/signature-pad-element/karma.conf.js",
+            "main": "projects/elements/src/test.ts",
+            "polyfills": "projects/elements/src/polyfills.ts",
+            "tsConfig": "projects/elements/tsconfig.spec.json",
+            "karmaConfig": "projects/elements/karma.conf.js",
             "styles": [
-              "projects/signature-pad-element/styles.css"
+              "projects/elements/styles.css"
             ],
             "scripts": [],
             "assets": [
-              "projects/signature-pad-element/src/favicon.ico",
-              "projects/signature-pad-element/src/assets"
+              "projects/elements/src/favicon.ico",
+              "projects/elements/src/assets"
             ]
           }
         },
@@ -263,8 +263,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/signature-pad-element/tsconfig.app.json",
-              "projects/signature-pad-element/tsconfig.spec.json"
+              "projects/elements/tsconfig.app.json",
+              "projects/elements/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -272,6 +272,6 @@
           }
         }
       }
-    },
+    }
   }
 }

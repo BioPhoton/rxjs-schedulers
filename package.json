@@ -13,13 +13,13 @@
     "main:serve:custom": "http-server dist/rxjs-schedulers",
     "main:build": "ng build --project=rxjs-schedulers",
     "lib:build": "ng build --project=angular-signature-pad",
-    "element:build": "ng build --project=signature-pad-element --prod --output-hashing=none",
-    "element:merge": "cat dist/signature-pad-element/{runtime,main}.js > dist/signature-pad-element/angular-element.js",
-    "element:merge:standalone": "cat dist/signature-pad-element/{runtime,polyfills,main}.js > dist/signature-pad-element/angular-element.js",
-    "element:gzip": "cat dist/signature-pad-element/angular-element.js | gzip > dist/signature-pad-element/angular-element.js.gz",
-    "element:copy": "cat dist/signature-pad-element/angular-element.js > src/assets/elements/angular-element.js",
+    "element:build": "ng build --project=elements --prod --output-hashing=none",
+    "element:merge": "cat dist/elements/{runtime,main}.js > dist/elements/elements.js",
+    "element:merge:standalone": "cat dist/elements/{runtime,polyfills,main}.js > dist/elements/elements.js",
+    "element:gzip": "cat dist/elements/elements.js | gzip > dist/elements/elements.js.gz",
+    "element:copy": "cat dist/elements/elements.js > src/assets/elements/elements.js",
     "element:update": "npm run element:build && npm run element:merge && npm run element:copy",
-    "element:serve": "http-server dist/signature-pad-element/ --gzip"
+    "element:serve": "http-server dist/elements/ --gzip"
   },
   "private": true,
   "dependencies": {

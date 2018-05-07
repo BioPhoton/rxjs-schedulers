@@ -6,9 +6,8 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
+const NG_ELEMENTS = ['elements'];
 @NgModule({
   declarations: [
     AppComponent
@@ -56,7 +55,13 @@ import { environment } from '../environments/environment';
 export class AppModule {
 
   constructor() {
+    /*
+    NG_ELEMENTS.forEach(i => document
+      .write(`<script src="https://raw.githubusercontent.com/BioPhoton/rxjs-schedulers/master/docs/${i}-for-ng.js" type="text/javascript"></script>`)
+    );
+     */
     document
-      .write('<script src="assets/elements/app-element.js" type="text/javascript"></script>');
+      .write('<script src="https://raw.githubusercontent.com/BioPhoton/rxjs-schedulers/master/docs/elements-for-ng.js" type="text/javascript"></script>');
   }
+
 }
