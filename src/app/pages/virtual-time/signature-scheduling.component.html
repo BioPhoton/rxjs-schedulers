@@ -2,20 +2,20 @@
 <app-element></app-element>
 <schedulers-and-animations></schedulers-and-animations>
 <form [formGroup]="form" class="row">
-  <mat-grid-list cols="2">
-    <mat-grid-tile>
+  <div class="row">
+    <div class="col">
       <signature-pad-card-group
         [group]="form"
         [config]="recordConfig">
       </signature-pad-card-group>
-    </mat-grid-tile>
-    <mat-grid-tile>
+    </div>
+    <div class="col">
       <signature-pad-card-group
         [group]="form"
         [config]="animateConfig">
       </signature-pad-card-group>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
   <div class="button-row">
     <button mat-raised-button color="accent" type="reset">
       Reset

@@ -2,11 +2,9 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {
   animationFrameScheduler,
-  interval,
   Subscription,
   VirtualTimeScheduler
 } from 'rxjs/index';
-import {map, take} from 'rxjs/operators';
 
 @Component({
   selector: 'signature-scheduling',
@@ -14,6 +12,17 @@ import {map, take} from 'rxjs/operators';
   styles: [`
     signature-pad {
       border: 2px dashed #eee;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      height: 600px;
+      width: 100%;
+    }
+
+    .row .col {
+      width: 50%;
     }
 
     .animation-progress {

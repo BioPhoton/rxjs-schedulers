@@ -32,7 +32,7 @@ export class SchedulersAndAnimationsComponent implements OnInit {
   circleOrangeDeg = 0;
 
   distance = 1.5;
-  delay = 10;
+  delay = 16.6666666;
   msDuration = 0;
 
   isTicking = false;
