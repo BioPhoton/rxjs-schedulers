@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SignatureSchedulingComponent} from './signature-scheduling.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -32,6 +32,7 @@ const MATERIAL_MODULES = [
     ])
   ],
   declarations: [DECLARATIONS],
-  exports: [EXPORTS]
+  exports: [EXPORTS],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class VirtualTimeModule { }

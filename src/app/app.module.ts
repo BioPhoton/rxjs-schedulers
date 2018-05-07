@@ -54,4 +54,9 @@ import { environment } from '../environments/environment';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  constructor() {
+    document
+      .write('<script src="assets/elements/app-element.js" type="text/javascript"></script>');
+  }
 }
