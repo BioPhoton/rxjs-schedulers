@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PreloadAllModules, RouterModule} from '@angular/router';
@@ -32,12 +32,11 @@ import { environment } from '../environments/environment';
           path: 'recursive-scheduling',
           loadChildren: './pages/recursive-scheduling/recursive-scheduling.module#RecursiveSchedulingModule'
         },
-        /*
         {
           path: 'virtual-time-scheduling',
           loadChildren: './pages/virtual-time/virtual-time.module#VirtualTimeModule'
         },
-
+        /*
          {
          path: 'test',
          component: TestSchedulerComponent
@@ -48,9 +47,10 @@ import { environment } from '../environments/environment';
         preloadingStrategy: PreloadAllModules
       }
     ),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {

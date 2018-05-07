@@ -19,34 +19,43 @@ import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
 export class ExecutionContextComponent {
 
   constructor() {
+    this.introDemo();
     // 1 this.introDemo();
     // 2 this.executionOrder();
     // 3 this.manualScheduling();
   }
 
   introDemo() {
+    of('').pipe(observeOn(queueScheduler))
+      .subscribe(_ => console.log('observable'));
 
-    setTimeout(_ => console.log('macro task (timeout)'));
+    requestAnimationFrame(
+      () => console.log('1 animation frame'));
 
-    Promise.resolve()
-      .then(_ => console.log('micro task (promise)'));
+    setTimeout(() =>
+      console.log('2 macro task (timeout)'), 0);
 
-    console.log('sync task');
+    Promise.resolve().then(() =>
+      console.log('3 micro task (promise)'));
+
+    console.log('4 sync task');
   }
 
   _introDemo() {
-    const delay = 0;
-
-    setTimeout(() =>
-      console.log('macro task (timeout)'), delay);
-
-    Promise.resolve().then(() =>
-      console.log('micro task (promise)'));
-
-    console.log('sync task');
-
     of('').pipe(observeOn(asyncScheduler))
       .subscribe(_ => console.warn('observable async'));
+
+    requestAnimationFrame(
+      () => console.log('1 animation frame'));
+
+    setTimeout(() =>
+      console.log('2 macro task (timeout)'), 0);
+
+    Promise.resolve().then(() =>
+      console.log('3 micro task (promise)'));
+
+    console.log('4 sync task');
+
   }
 
   executionOrder() {

@@ -31,8 +31,8 @@ export class AnimationFrameComponent implements OnInit {
   circleGreenDeg = 0;
   circleOrangeDeg = 0;
 
-  distance = 1;
-  delay = 100;
+  distance = 1.5;
+  delay = 10;
   msDuration = 0;
 
   isTicking = false;
@@ -40,8 +40,15 @@ export class AnimationFrameComponent implements OnInit {
   constructor(private fb: FormBuilder) {
 
     this.form = this.fb.group({
-      delay: [this.delay]
+      delay: [this.delay],
+      speed: [3]
     });
+
+    this.form.get('speed').valueChanges
+      .subscribe((v) => {
+      console.log('v', v);
+        this.distance = 0.5 * v;
+      });
 
   }
 
@@ -53,7 +60,8 @@ export class AnimationFrameComponent implements OnInit {
     const FPS = 60;
 
     interval(1000 / FPS, animationFrameScheduler)
-      .pipe(tap(_ => {/*ANIMATION STEP*/}))
+      .pipe(tap(_ => {/*ANIMATION STEP*/
+      }))
       .subscribe();
 
   }

@@ -1,4 +1,4 @@
-import {Injector, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule} from '@angular/core';
 import {createCustomElement} from '@angular/elements';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
@@ -10,12 +10,12 @@ import {AppComponent} from './app.component';
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    console.log('in AppModule ctor');
-    const signaturePadElement = createCustomElement(AppComponent, {injector});
-    customElements.define('signature-pad', signaturePadElement);
   }
 
   ngDoBootstrap() {
+    console.log('michi11');
+    const ngElement = createCustomElement(AppComponent, {injector: this.injector});
+    customElements.define('app-element', ngElement);
   }
 }
 

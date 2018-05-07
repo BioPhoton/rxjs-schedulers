@@ -4,17 +4,19 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --project=rxjs-schedulers",
+    "build": "ng build --project=rxjs-schedulers",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "serve:main": "ng s --project=rxjs-schedulers",
+    "serve:manually": "http-server dist/rxjs-schedulers",
     "build:lib": "ng build --project=angular-signature-pad",
     "build:element": "ng build --project=signature-pad-element --prod --output-hashing=none",
-    "gzip:element": "cat dist/signature-pad-element/{runtime,polyfills,main}.js | gzip > signature-pad-element.js.gz",
-    "update:element": "npm run build:element && npm run gzip:element",
-    "serve:element": "http-server --gzip"
+    "merge:element": "cat dist/signature-pad-element/{runtime,polyfills,main}.js > dist/signature-pad-element/app-element.js",
+    "gzip:element": "cat dist/signature-pad-element/app-element.js | gzip > dist/signature-pad-element/app-element.js.gz",
+    "copy:element": "cat dist/signature-pad-element/app-element.js > src/assets/elements/app-element.js",
+    "update:element": "npm run build:element && npm run merge:element && npm run copy:element",
+    "serve:element": "http-server dist/signature-pad-element/ --gzip"
   },
   "private": true,
   "dependencies": {

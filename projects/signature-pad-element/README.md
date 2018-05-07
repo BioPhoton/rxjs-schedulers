@@ -1,8 +1,6 @@
 # Test web component
 
-1. `npm run build:element`
-2. merge content into `app.element.js` in root
-3. optionally run `npm run gzip:element`
+1. `npm run update:element`
 
 # Setup steps
 1. ng add @angular/elements
@@ -33,14 +31,16 @@ export class AppComponent {
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const appElement = createCustomElement(AppComponent, {injector});
-    customElements.define('app-element', appElement);
+
   }
-  ngDoBootstrap() { }
+  ngDoBootstrap() { 
+      const appElement = createCustomElement(AppComponent, {injector});
+      customElements.define('app-element', appElement);
+  }
 }
 ```
 
-6. add polifill to polifill.ts of my-element
+6. add polyfill to `polyfill.ts` of project `my-element`
 import './build/document-register-element.js';
 
 7. ng build --project=my-element --prod --output-hashing=none

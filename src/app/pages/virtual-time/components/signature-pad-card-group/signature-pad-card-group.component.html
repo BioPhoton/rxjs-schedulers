@@ -1,4 +1,4 @@
-<mat-card class="signature-pad-card" [ngClass]="theme" [formGroup]="group">
+<mat-card class="signature-pad-card" [formGroup]="group">
   <mat-card-title>
     <h2 class="mat-h3">
       <!-- initial message -->
@@ -12,8 +12,11 @@
     </h2>
   </mat-card-title>
   <mat-card-content class="signature-pad">
-      <signature-pad-control [formControlName]="config.name" #signaturePad>
-      </signature-pad-control>
+     <signature-pad-control
+       [formControlName]="config.name"
+       #signaturePad>
+     </signature-pad-control>
+    <!-- -->
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button class="clear" (click)="clear()">

@@ -28,8 +28,7 @@ import {GlobalSignaturePadConfig} from '../../tokens/global-config.token';
       #signatureCanvas>
     </canvas>
   `,
-  styleUrls: ['../../styles.scss'],
-  encapsulation: ViewEncapsulation.Native
+  styleUrls: ['../../styles.scss']
 })
 export class SignaturePadComponent implements OnInit, OnChanges, AfterViewInit {
 

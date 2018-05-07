@@ -42,21 +42,6 @@ export class SignatureSchedulingComponent {
       signature: [],
       'signature-player': []
     });
-
-  }
-
-  private basic() {
-
-    const i$ = interval(1000)
-      .pipe(
-        take(100),
-        map(a => 'a' + a)
-      );
-
-    i$.subscribe(v => {
-      console.log('subscribe: ', v);
-    });
-
   }
 
   drawSignature(showImmediately?: boolean) {
@@ -75,18 +60,27 @@ export class SignatureSchedulingComponent {
         // 0 setups delay state and work for the schedule method
         const delay = this.getDelayForPoint(point, startMs);
         const initialState = {segmentIndex, point};
-
-        // 1 create work and log
         console.log('initialState:', initialState);
+
+        // 1 create work
+        // 1.1 log state in work
         // 2 schedule work
+
         // 3 implement logic
         // 3.1. getCurrentSignature
         // 3.2. getUpdatedSignature
         // 3.3. updateAnimatedSignature
+
         // 4 show overlapping animations
         // 5 setup subscription
         // 6 .add(subscription)
         // 7 resetSubscription
+
+        // 8 show scheduler as param
+        // 9 use with virtual time
+        // 11 show broken demo
+        // 10 implement flush
+        // 11 show working demo
       });
     });
 
@@ -107,6 +101,7 @@ export class SignatureSchedulingComponent {
     signature.forEach((segment, segmentIndex) => {
       segment.forEach((point) => {
         const delay = this.getDelayForPoint(point, startMs);
+        const initialState = {segmentIndex, point};
         const work = (state) => {
           const actualSignature = this.getCurrentAnimatedSignature();
           const updatedSignature = this.getUpdateSignature(actualSignature, state.segmentIndex, state.point);
@@ -114,7 +109,7 @@ export class SignatureSchedulingComponent {
         };
 
         this.drawingProcessSub.add(
-          scheduler.schedule(work, delay, {segmentIndex, point})
+          scheduler.schedule(work, delay, initialState)
         );
       });
     });

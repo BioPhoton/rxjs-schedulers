@@ -10,7 +10,8 @@ body { margin: 0; }
 
 .button-row {
   display: flex;
-  button {
+  button,
+  mat-slide-toggle {
     margin-right: 5px;
     float: left;
   }

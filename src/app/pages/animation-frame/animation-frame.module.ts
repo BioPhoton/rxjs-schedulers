@@ -1,16 +1,16 @@
 import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {AnimationFrameComponent} from './animation-frame.component';
 import {
   MatButtonModule, MatInputModule,
-  MatSliderModule
+  MatSlideToggleModule, MatSliderModule, MatCardModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 
 const DECLARATIONS = [AnimationFrameComponent];
 const EXPORTS = [DECLARATIONS];
-const MATERIAL_MODULES = [MatButtonModule, MatInputModule];
+const MATERIAL_MODULES = [MatCardModule, MatButtonModule, MatInputModule, MatSliderModule, MatSlideToggleModule];
 
 @NgModule({
   imports: [
@@ -24,6 +24,7 @@ const MATERIAL_MODULES = [MatButtonModule, MatInputModule];
       }
     ])
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [DECLARATIONS],
   exports: [EXPORTS]
 })
