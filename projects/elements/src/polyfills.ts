@@ -73,7 +73,7 @@ import 'core-js/es7/reflect';
  */
 
 /* Excludes because we will use this components in another angular app ===============================*/
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+// import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
 

@@ -55,13 +55,9 @@ const NG_ELEMENTS = ['elements'];
 export class AppModule {
 
   constructor() {
-    /*
     NG_ELEMENTS.forEach(i => document
-      .write(`<script src="https://raw.githubusercontent.com/BioPhoton/rxjs-schedulers/master/docs/${i}-for-ng.js" type="text/javascript"></script>`)
+      .write(`<script src="assets/elements/${i}.js" type="text/javascript"></script>`)
     );
-     */
-    document
-      .write('<script src="https://raw.githubusercontent.com/BioPhoton/rxjs-schedulers/master/docs/elements-for-ng.js" type="text/javascript"></script>');
   }
 
 }

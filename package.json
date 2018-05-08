@@ -14,12 +14,16 @@
     "main:build": "ng build --project=rxjs-schedulers",
     "lib:build": "ng build --project=angular-signature-pad",
     "element:build": "ng build --project=elements --prod --output-hashing=none",
-    "element:merge": "cat dist/elements/{runtime,main}.js > dist/elements/elements.js",
-    "element:merge:standalone": "cat dist/elements/{runtime,polyfills,main}.js > dist/elements/elements.js",
-    "element:gzip": "cat dist/elements/elements.js | gzip > dist/elements/elements.js.gz",
+    "element:merge": "cat dist/elements/{runtime,polyfills,main}.js > dist/elements/elements.js",
     "element:copy": "cat dist/elements/elements.js > src/assets/elements/elements.js",
+    "element:gzip": "cat dist/elements/elements.js | gzip > dist/elements/elements.js.gz",
     "element:update": "npm run element:build && npm run element:merge && npm run element:copy",
-    "element:serve": "http-server dist/elements/ --gzip"
+    "element:build:standalone": "ng build --project=elements-standalone --prod --output-hashing=none",
+    "element:merge:standalone": "cat dist/elements/{runtime,polyfills,main}.js > dist/elements/elements-standalone.js",
+    "element:gzip:standalone": "cat dist/elements/elements-standalone.js | gzip > dist/elements/elements-standalone.js.gz",
+    "element:update:standalone": "npm run element:build:standalone && npm run element:merge:standalone",
+    "element:serve": "http-server dist/elements/ --gzip",
+    "docs:update":"cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/styles.css > docs/styles.css"
   },
   "private": true,
   "dependencies": {
