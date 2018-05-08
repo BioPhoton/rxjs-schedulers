@@ -7,7 +7,9 @@ import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
 
-const NG_ELEMENTS = ['elements'];
+const NG_ELEMENTS = [
+  'elements'
+];
 @NgModule({
   declarations: [
     AppComponent
