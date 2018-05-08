@@ -205,7 +205,7 @@
             ],
             "scripts": [
               {
-                "input": "node_modules/document-register-element/build/document-register-element.js"
+                "input": "node_modules/@webcomponents/custom-elements/src/native-shim.js"
               }
             ]
           },
@@ -310,7 +310,11 @@
               },
               "projects/elements/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/@webcomponents/custom-elements/src/native-shim.js"
+              }
+            ]
           },
           "configurations": {
             "production": {

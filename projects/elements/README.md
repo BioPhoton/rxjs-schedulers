@@ -1,18 +1,32 @@
-# Test web component
-
-1. `npm run update:element`
-
 # Setup steps
-1. ng add @angular/elements
+1. `ng add @angular/elements`
+The cli will install some packages and a line to your projects scripts config in `angular.json`.
 
-2. ng generate application my-element
-In App component
+```json
+{
+...
+  "scripts": [
+    {
+      "input": "node_modules/document-register-element/build/document-register-element.js"
+    }
+  ]
+}
+```
 
-3. change app.component to 
+2. `ng generate application my-element`
+
+3. In your `angular.json` copy the scripts reference from step 2. into the config of your new project and remove it from your old one.
+
+4. In your `projects/my-element` project sdd a polyfill to your `polyfills.ts`.
+```
+import '@webcomponents/custom-elements/custom-elements.min.js';
+```
+
+4. Change `app.component.ts` to:
 
 ```typescript
 @Component({
-  selector: 'app-element',
+  selector: 'ng-element',
   template: `<h1>I'm a webcomponent</h1>`,
   encapsulation: ViewEncapsulation.Native
 })
@@ -21,7 +35,7 @@ export class AppComponent {
 }
 ```
 
-4. change app.module.ts to:
+5. Change `app.module.ts` to:
 
 ```typescript
 @NgModule({
@@ -40,13 +54,18 @@ export class AppModule {
 }
 ```
 
-6. add polyfill to `polyfill.ts` of project `my-element`
-import './build/document-register-element.js';
-
 7. ng build --project=my-element --prod --output-hashing=none
 
-8. merge code into one file 
+9. in your `index.html` replace ```html<app-root></app-root>``` with ```html<ng-element></ng-element>```
 
-9. create index.html
+10. serve it ```ng serve --project my-element```
 
-10. serve it => http-server
+## Setup for IE
+
+1. `npm i @webcomponents/custom-elements --save`
+
+2. In the file `angular.json` the project `my-elements` replace the script by ```node_modules/@webcomponents/custom-elements/src/native-shim.js```
+
+# Test web component
+
+1. `npm run update:element`

@@ -23,7 +23,7 @@
     "element:gzip:standalone": "cat dist/elements/elements-standalone.js | gzip > dist/elements/elements-standalone.js.gz",
     "element:update:standalone": "npm run element:build:standalone && npm run element:merge:standalone",
     "element:serve": "http-server dist/elements/ --gzip",
-    "docs:update":"cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/styles.css > docs/styles.css"
+    "docs:update": "cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/elements-standalone.js > docs/elements-standalone.js && cat dist/elements/styles.css > docs/styles.css"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +43,7 @@
     "@angular/router": "6.0.0",
     "@angular/service-worker": "6.0.0",
     "@webcomponents/custom-elements": "^1.1.0",
+    "@webcomponents/webcomponentsjs": "^1.2.0",
     "core-js": "^2.5.4",
     "document-register-element": "^1.7.2",
     "rxjs": "6.1.0",
