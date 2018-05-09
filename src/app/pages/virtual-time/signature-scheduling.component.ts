@@ -54,7 +54,7 @@ export class SignatureSchedulingComponent {
     });
   }
 
-  drawSignature(showImmediately?: boolean) {
+  start1_drawSignature(showImmediately?: boolean) {
     // get scheduler
     const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
     // get values for animation
@@ -70,33 +70,44 @@ export class SignatureSchedulingComponent {
         // 0 setups delay state and work for the schedule method
         const delay = this.getDelayForPoint(point, startMs);
         const initialState = {segmentIndex, point};
+
         console.log('initialState:', initialState);
 
         // 1 create work
         // 1.1 log state in work
         // 2 schedule work
 
-        // 3 implement logic
-        // 3.1. getCurrentSignature
-        // 3.2. getUpdatedSignature
-        // 3.3. updateAnimatedSignature
+        // SHOW TIME
+
+        // 3 implement logic (just copy it ;-)
+        // 3.1 getCurrentSignature
+        // 3.2 getUpdatedSignature
+        // 3.3 updateAnimatedSignature
+
+        // SHOW TIME
 
         // 4 show overlapping animations
         // 5 setup subscription
         // 6 .add(subscription)
         // 7 resetSubscription
 
-        // 8 show scheduler as param
-        // 9 use with virtual time
-        // 11 show broken demo
-        // 10 implement flush
-        // 11 show working demo
+        // SHOW TIME
+
+        // ==========================
+
+        // 1 show scheduler as param
+        // 2 use with virtual time
+        // 3 show broken demo
+        // 4 implement flush
+        // 5 show working demo
+
+        // SHOW TIME
       });
     });
 
   }
 
-  _drawSignature(showImmediately) {
+  fin_drawSignature(showImmediately) {
     // get scheduler
     const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
     // get values for animation
@@ -338,27 +349,5 @@ export class SignatureSchedulingComponent {
     ];
 
   }
-
-  // ======= QUIZ =====
-
-  /*
-   // Which one completes?
-   interval(1000, this.virtualTimeScheduler)
-   .subscribe();
-
-   timer(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, this.virtualTimeScheduler)
-   .pipe(take(1))
-   .subscribe(null, null, () => console.log('complete'));
-
-   interval(0, this.virtualTimeScheduler)
-   .pipe(take(Number.POSITIVE_INFINITY))
-   .subscribe(null, null, () => console.log('complete'));
-
-
-   interval(Number.POSITIVE_INFINITY, this.virtualTimeScheduler)
-   .pipe(take(1))
-   .subscribe();
-   this.virtualTimeScheduler.flush();
-   */
 
 }
