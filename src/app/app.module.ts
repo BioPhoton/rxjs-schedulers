@@ -57,9 +57,16 @@ const NG_ELEMENTS = [
 export class AppModule {
 
   constructor() {
-    NG_ELEMENTS.forEach(i => document
-      .write(`<script src="assets/elements/${i}.js" type="text/javascript"></script>`)
-    );
+    NG_ELEMENTS
+      .forEach(name => document.body.appendChild(this.getScriptTag(name)));
+  }
+
+  getScriptTag(name): HTMLElement {
+    const scriptTag = document
+      .createElement(`script`);
+    scriptTag.setAttribute('src', `assets/elements/${name}.js`);
+    scriptTag.setAttribute('type', 'text/javascript');
+    return scriptTag;
   }
 
 }
