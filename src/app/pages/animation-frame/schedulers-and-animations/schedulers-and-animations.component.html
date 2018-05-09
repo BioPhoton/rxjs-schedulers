@@ -1,0 +1,63 @@
+<mat-card [ngStyle]="{width:'350px'}">
+  <mat-card-title>
+    <h2 class="mat-h2">
+      RxJS - Schedulers And Animations
+    </h2>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <input type="number" placeholder="Interval delay" matInput
+          formControlName="delay"/>
+      </mat-form-field>
+      <mat-form-field class="form-col">
+        <input type="number"
+          placeholder="Circle speed"
+          matInput
+          formControlName="speed"/>
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+  <mat-card-content>
+
+    <div class="center">
+
+      <div class="button-row">
+      <button
+        mat-raised-button
+        class="input-group-text"
+        type="submit" (click)="toggleTick()">
+        toggle
+      </button>
+
+        <button
+          mat-raised-button
+          class="input-group-text"
+          type="submit" (click)="resetDistance()">
+          Reset
+        </button>
+      </div>
+      <div class="wrap"
+        [ngStyle]="{transform: 'rotate('+circleRedDeg + 'deg)'}">
+        <div class="circle red"></div>
+      </div>
+      <div class="wrap"
+        [ngStyle]="{transform: 'rotate('+circleGreenDeg + 'deg)'}">
+        <div class="circle green"></div>
+      </div>
+      <div class="wrap"
+        [ngStyle]="{transform: 'rotate('+circleBlueDeg + 'deg)'}">
+        <div class="circle blue"></div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content>
+    <div class="legend">
+      <span class="circle red"></span> DefaultScheduler<br/>
+      <span class="circle green"></span> AsyncScheduler<br/>
+      <span class="circle blue"></span> AnimationFrameScheduler<br/>
+    </div>
+  </mat-card-content>
+</mat-card>
