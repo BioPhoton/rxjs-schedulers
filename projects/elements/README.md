@@ -66,6 +66,10 @@ export class AppModule {
 
 2. In the file `angular.json` the project `my-elements` replace the script by ```node_modules/@webcomponents/custom-elements/src/native-shim.js```
 
-# Test web component
+# Test web component standalone
+1. `npm run update:element:standalone`
+2. `ng serve --project elements`
 
+# Test web component in other angular app
 1. `npm run update:element`
+2. `npm run start`
