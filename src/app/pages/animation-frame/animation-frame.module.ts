@@ -7,8 +7,9 @@ import {
   MatSlideToggleModule, MatSliderModule, MatCardModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
+import {SchedulersAndAnimationsCompComponent} from './schedulers-and-animations/schedulers-and-animations.component';
 
-const DECLARATIONS = [AnimationFrameComponent];
+const DECLARATIONS = [AnimationFrameComponent, SchedulersAndAnimationsCompComponent];
 const EXPORTS = [DECLARATIONS];
 const MATERIAL_MODULES = [MatCardModule, MatButtonModule, MatInputModule, MatSliderModule, MatSlideToggleModule];
 
