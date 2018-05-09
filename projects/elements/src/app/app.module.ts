@@ -28,7 +28,7 @@ export class AppModule {
 
     const config: NgElementConfig = {injector: this.injector};
     elements.forEach((cl) => {
-      const ngElement = createCustomElement(cl, paramsObj);
+      const ngElement = createCustomElement(cl, config);
       customElements.define(cl.selector, ngElement);
     });
   }

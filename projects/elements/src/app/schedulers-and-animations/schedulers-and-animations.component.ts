@@ -25,6 +25,7 @@ import {
 })
 export class SchedulersAndAnimationsComponent implements OnInit {
 
+  static selector = 'schedulers-and-animations';
   form: FormGroup;
   circleRedDeg = 0;
   circleBlueDeg = 0;
@@ -46,7 +47,6 @@ export class SchedulersAndAnimationsComponent implements OnInit {
 
     this.form.get('speed').valueChanges
       .subscribe((v) => {
-      console.log('v', v);
         this.distance = 0.5 * v;
       });
 
