@@ -158,7 +158,7 @@ export class MorseCodeSchedulingComponent {
 
     };
 
-    return queueScheduler.schedule(work(this), 0, signalsToSched);
+    return queueScheduler.schedule(work, 0, signalsToSched);
   }
 
   private start_scheduleSignalsRecursively(signalsToSched: string[]): Subscription {
