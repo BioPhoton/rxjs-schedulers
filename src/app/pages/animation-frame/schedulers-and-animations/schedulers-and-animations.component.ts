@@ -46,7 +46,6 @@ export class SchedulersAndAnimationsCompComponent implements OnInit {
 
     this.form.get('speed').valueChanges
       .subscribe((v) => {
-      console.log('v', v);
         this.distance = 0.5 * v;
       });
 
