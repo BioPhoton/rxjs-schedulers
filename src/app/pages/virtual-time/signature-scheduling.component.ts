@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {
   animationFrameScheduler,
+  asyncScheduler,
   Subscription,
   VirtualTimeScheduler
 } from 'rxjs/index';
@@ -14,6 +15,11 @@ import {
       border: 2px dashed #eee;
     }
 
+    signature-pad-card-group {
+      width: 500px;
+      display: block;
+    }
+
     .row {
       display: flex;
       flex-wrap: wrap;
@@ -23,7 +29,6 @@ import {
 
     .row .col {
       width: 50%;
-      padding: 10px;
     }
 
     .animation-progress {
@@ -54,9 +59,109 @@ export class SignatureSchedulingComponent {
     });
   }
 
+  drawSignature(showImmediately?: boolean) {
+    // get scheduler
+    const scheduler = !showImmediately ? asyncScheduler : this.virtualTimeScheduler;
+    // get values for animation
+    const signature = this.getSignatureToAnimate();
+    const startMs = new Date(signature[0][0].time).getTime();
+
+    // reset
+    this.resetAnimatedSignature();
+
+    // loop over the 2d array of the signature
+    signature.forEach((segment, segmentIndex) => {
+      segment.forEach((point) => {
+
+        const delay = this.getDelayForPoint(point, startMs);
+        const initialState = {segmentIndex, point};
+        const work = (state) => {
+          console.log('initialState:', state);
+          // const actualSignature = this.getCurrentAnimatedSignature();
+          // const updatedSignature = this.getUpdateSignature(actualSignature, state.segmentIndex, state.point);
+          // this.updateAnimatedSignature(updatedSignature);
+        };
+
+        scheduler.schedule(work, delay, initialState);
+
+        // SHOW TIME
+
+        // 4 show overlapping animations
+        // 5 setup subscription
+        // 6 .add(subscription)
+        // 7 resetSubscription
+
+        // SHOW TIME
+
+        // ==========================
+
+        // 1 show scheduler as param
+        // 2 use with virtual time
+        // 3 show broken demo
+        // 4 implement flush
+        // 5 show working demo
+
+        // SHOW TIME
+      });
+    });
+
+    if (showImmediately) {
+
+    }
+  }
+
+  start2_drawSignature(showImmediately?: boolean) {
+    // get scheduler
+    const scheduler = showImmediately ? this.virtualTimeScheduler : asyncScheduler;
+    // get values for animation
+    const signature = this.getSignatureToAnimate();
+    const startMs = new Date(signature[0][0].time).getTime();
+
+    // reset
+    this.resetAnimatedSignature();
+
+    // loop over the 2d array of the signature
+    signature.forEach((segment, segmentIndex) => {
+      segment.forEach((point) => {
+
+        const delay = this.getDelayForPoint(point, startMs);
+        const initialState = {segmentIndex, point};
+        const work = (state) => {
+          console.log('initialState:', state);
+          // const actualSignature = this.getCurrentAnimatedSignature();
+          // const updatedSignature = this.getUpdateSignature(actualSignature, state.segmentIndex, state.point);
+          // this.updateAnimatedSignature(updatedSignature);
+        };
+
+        scheduler.schedule(work, delay, initialState);
+
+        // SHOW TIME
+
+        // 4 show overlapping animations
+        // 5 setup subscription
+        // 6 .add(subscription)
+        // 7 resetSubscription
+
+        // SHOW TIME
+
+        // ==========================
+
+        // 1 show scheduler as param
+        // 2 use with virtual time
+        // 3 show broken demo
+        // 4 implement flush
+        // 5 show working demo
+
+        // SHOW TIME
+      });
+    });
+
+  }
+
+
   start1_drawSignature(showImmediately?: boolean) {
     // get scheduler
-    const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
+    const scheduler = showImmediately ? this.virtualTimeScheduler : asyncScheduler;
     // get values for animation
     const signature = this.getSignatureToAnimate();
     const startMs = new Date(signature[0][0].time).getTime();
@@ -70,8 +175,11 @@ export class SignatureSchedulingComponent {
         // 0 setups delay state and work for the schedule method
         const delay = this.getDelayForPoint(point, startMs);
         const initialState = {segmentIndex, point};
+        const work = (state) => {
+          console.log('initialState:', state);
+        };
 
-        console.log('initialState:', initialState);
+        scheduler.schedule(work, delay, initialState);
 
         // 1 create work
         // 1.1 log state in work

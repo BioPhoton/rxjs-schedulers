@@ -19,10 +19,12 @@ import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
 export class ExecutionContextComponent {
 
   constructor() {
-    this.introDemo();
-    // 1 this.introDemo();
-    // 2 this.executionOrder();
-    // 3 this.manualScheduling();
+    // 1
+    // this.introDemo();
+    // 2
+    // this.executionOrder();
+    // 3
+    // this.manualScheduling();
   }
 
   introDemo() {
@@ -60,7 +62,7 @@ export class ExecutionContextComponent {
 
   executionOrder() {
 
-    const delay = 1;
+    const delay = 0;
     const obs$ = of(42);
 
     obs$.pipe(observeOn(animationFrameScheduler, delay))

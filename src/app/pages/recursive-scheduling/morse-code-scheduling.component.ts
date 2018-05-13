@@ -1,13 +1,19 @@
 import {Component, Inject} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {merge, Observable, queueScheduler, Subject, Subscription} from 'rxjs/index';
+import {
+  merge,
+  Observable,
+  queueScheduler,
+  Subject,
+  Subscription
+} from 'rxjs/index';
+import {Action} from 'rxjs/internal/scheduler/Action';
 import {mapTo} from 'rxjs/operators';
 import {
   MorseCharacters,
   MorseTimeRanges,
   MorseTranslations
 } from '../../core/token/injection-tokens';
-import {Action} from 'rxjs/internal/scheduler/Action';
 
 interface TickData {
   msDiff?: number;
@@ -63,21 +69,24 @@ export class MorseCodeSchedulingComponent {
     if (this.morseSubscription) {
       this.morseSubscription.unsubscribe();
     }
-    this.morseSubscription = this._scheduleSignalsRecursive(morseChars);
+    this.morseSubscription = this.scheduleSignalsRecursively(morseChars);
   }
 
   private scheduleSignalsRecursively(signalsToSched: string[]): Subscription {
 
     const work = (signals: string[]) => {
+      // const action: Action = null;
 
-      // this component
+      const signal = signals.shift();
+      console.log(signal, this);
+      // const duration = ctx.getDurationByMorseChar(signal);
 
       // this action
       // (this as Action<any>).
 
       // shift signals
 
-      // schedule(signals, delay) recursively
+      // action.schedule(signals, duration);
 
       // inject ctx of component
 
@@ -87,10 +96,10 @@ export class MorseCodeSchedulingComponent {
 
     };
 
-    return queueScheduler.schedule(work, 0, signalsToSched);
+    return queueScheduler.schedule(work(this), 0, signalsToSched);
   }
 
-  private _scheduleSignalsRecursive(signalsToSched: string[]): Subscription {
+  private _scheduleSignalsRecursively(signalsToSched: string[]): Subscription {
 
     const work = (ctx) => {
       let isSending = false;
@@ -120,6 +129,33 @@ export class MorseCodeSchedulingComponent {
 
         (this as Action<any>).schedule(signals, duration);
       };
+    };
+
+    return queueScheduler.schedule(work(this), 0, signalsToSched);
+  }
+
+  private start2_scheduleSignalsRecursively(signalsToSched: string[]): Subscription {
+
+    const work = (signals: string[]) => {
+      // const action: Action = null;
+
+      const signal = signals.shift();
+      console.log(signal, this);
+      // const duration = ctx.getDurationByMorseChar(signal);
+
+      // this action
+      // (this as Action<any>).
+
+      // shift signals
+
+      // action.schedule(signals, duration);
+
+      // inject ctx of component
+
+      // apply inner state
+
+      // complete by copy paste code
+
     };
 
     return queueScheduler.schedule(work(this), 0, signalsToSched);
