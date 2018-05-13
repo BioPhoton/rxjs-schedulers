@@ -137,14 +137,13 @@ export class MorseCodeSchedulingComponent {
   private start2_scheduleSignalsRecursively(signalsToSched: string[]): Subscription {
 
     const work = (signals: string[]) => {
-      // const action: Action = null;
+      // const action: Action<any> = this;
 
       const signal = signals.shift();
       console.log(signal, this);
       // const duration = ctx.getDurationByMorseChar(signal);
 
-      // this action
-      // (this as Action<any>).
+      // this is the action
 
       // shift signals
 

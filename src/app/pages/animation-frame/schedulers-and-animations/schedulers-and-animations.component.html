@@ -24,12 +24,9 @@
     <div class="center">
 
       <div class="button-row">
-      <button
-        mat-raised-button
-        class="input-group-text"
-        type="submit" (click)="toggleTick()">
-        toggle
-      </button>
+        <mat-slide-toggle
+          (click)="toggleTick()">
+        </mat-slide-toggle>
 
         <button
           mat-raised-button
@@ -55,7 +52,7 @@
 
   <mat-card-content>
     <div class="legend">
-      <span class="circle red"></span> DefaultScheduler<br/>
+      <span class="circle red"></span> QueueScheduler<br/>
       <span class="circle green"></span> AsyncScheduler<br/>
       <span class="circle blue"></span> AnimationFrameScheduler<br/>
     </div>
