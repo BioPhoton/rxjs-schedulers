@@ -67,7 +67,6 @@ export class SignatureSchedulingComponent {
     const startMs = new Date(signature[0][0].time).getTime();
 
     // reset
-    this.resetSubscription();
     this.resetAnimatedSignature();
 
     // loop over the 2d array of the signature
@@ -77,22 +76,20 @@ export class SignatureSchedulingComponent {
         const delay = this.getDelayForPoint(point, startMs);
         const initialState = {segmentIndex, point};
         const work = (state) => {
-          // console.log('initialState:', state);
-          const actualSignature = this.getCurrentAnimatedSignature();
-          const updatedSignature = this.getUpdateSignature(actualSignature, state.segmentIndex, state.point);
-          this.updateAnimatedSignature(updatedSignature);
+          console.log('initialState:', state);
+          // const actualSignature = this.getCurrentAnimatedSignature();
+          // const updatedSignature = this.getUpdateSignature(actualSignature, state.segmentIndex, state.point);
+          // this.updateAnimatedSignature(updatedSignature);
         };
 
-        this.drawingProcessSub.add(
-          scheduler.schedule(work, delay, initialState)
-        );
-
+        scheduler.schedule(work, delay, initialState);
 
       });
     });
 
     if (showImmediately) {
-        const virtualTimeScheduler: VirtualTimeScheduler = scheduler;
+      (scheduler as VirtualTimeScheduler);
+
     }
   }
 
@@ -143,7 +140,6 @@ export class SignatureSchedulingComponent {
     });
 
   }
-
 
   start1_drawSignature(showImmediately?: boolean) {
     // get scheduler
