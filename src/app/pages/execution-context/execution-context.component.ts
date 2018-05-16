@@ -71,7 +71,7 @@ export class ExecutionContextComponent {
       .subscribe(v => console.log('4 observable async', v));
     obs$.pipe(observeOn(asapScheduler, delay))
       .subscribe(v => console.log('3 observable asap', v));
-    obs$.pipe(subscribeOn(queueScheduler, delay))
+    obs$.pipe(observeOn(queueScheduler, delay))
       .subscribe(v => console.log('1 observable queue', v));
     obs$
       .subscribe(v => console.log('2 observable default', v));
