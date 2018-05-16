@@ -67,7 +67,7 @@ export class SignatureSchedulingComponent {
     const startMs = new Date(signature[0][0].time).getTime();
 
     // reset
-    this.resetAnimatedSignature();
+     this.resetAnimatedSignature();
 
     // loop over the 2d array of the signature
     signature.forEach((segment, segmentIndex) => {
