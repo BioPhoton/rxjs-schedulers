@@ -6,6 +6,7 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
+import {CustomSchedulerComponent} from './pages/custom-scheduler/custom-scheduler.component';
 
 const NG_ELEMENTS = [
   'elements'
@@ -37,6 +38,10 @@ const NG_ELEMENTS = [
           path: 'virtual-time-scheduling',
           loadChildren: './pages/virtual-time/virtual-time.module#VirtualTimeModule'
         },
+        {
+          path: 'custom-scheduler',
+          loadChildren: './pages/custom-scheduler/custom-scheduler.module#CustomSchedulerModule'
+        }
         /*
          {
          path: 'test',
