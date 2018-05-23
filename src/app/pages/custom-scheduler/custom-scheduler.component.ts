@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {of, asyncScheduler} from 'rxjs/index';
+import {SchedulerAction} from 'rxjs/internal/types';
 import {observeOn} from 'rxjs/internal/operators';
-import {Async2Scheduler} from './AudioContextScheduler';
-import {Async2Action} from './Async2Action';
+import {MyAsyncScheduler} from './MyAsyncScheduler';
+import {MyAsyncAction} from './MyAsyncAction';
+import {AudioContextClockScheduler} from './AutioContextClockScheduler';
 
 @Component({
   selector: 'custom-scheduler',
@@ -11,10 +13,24 @@ import {Async2Action} from './Async2Action';
 export class CustomSchedulerComponent implements OnInit {
 
   constructor() {
-    const async2Scheduler = new Async2Scheduler(Async2Action);
-    of(42)
-      .pipe(observeOn(async2Scheduler, 3000))
+    /*
+    of('asyncScheduler')
+      .pipe(observeOn(asyncScheduler, 3000))
       .subscribe(console.log);
+
+     const myAsyncScheduler = new MyAsyncScheduler(MyAsyncAction);
+     of('myAsyncScheduler')
+     .pipe(observeOn(myAsyncScheduler, 3000))
+     .subscribe(console.log);
+    */
+
+   // custom-scheduler.component.ts(27,71):
+   // 'SchedulerAction' only refers to a type, but is being used as a value here.
+    const audioContextClockScheduler = new AudioContextClockScheduler(<any>SchedulerAction);
+
+    // audioContextClockScheduler
+    //  .schedule(() => { console.log('In my scheduler'); }, 0, 'state');
+
   }
 
   ngOnInit() {

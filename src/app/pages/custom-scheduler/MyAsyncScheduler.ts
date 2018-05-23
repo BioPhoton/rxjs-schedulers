@@ -1,18 +1,18 @@
-import {Async2Action} from './Async2Action';
+import {MyAsyncAction} from './MyAsyncAction';
 import {Scheduler, SchedulerAction, Subscription} from 'rxjs/index';
 import {Action} from 'rxjs/internal/scheduler/Action';
 
-export class Async2Scheduler extends Scheduler {
+export class MyAsyncScheduler extends Scheduler {
   public static delegate?: Scheduler;
 
-  public actions: Array<Async2Action<any>> = [];
+  public actions: Array<MyAsyncAction<any>> = [];
   /**
    * A flag to indicate whether the Scheduler is currently executing a batch of
    * queued actions.
    * @type {boolean}
    * @deprecated internal use only
    */
-  public active: boolean = false;
+  public active = false;
   /**
    * An internal ID used to track the latest asynchronous task such as those
    * coming from `setTimeout`, `setInterval`, `requestAnimationFrame`, and
@@ -25,8 +25,8 @@ export class Async2Scheduler extends Scheduler {
   constructor(SchedulerAction: typeof Action,
               now: () => number = Scheduler.now) {
     super(SchedulerAction, () => {
-      if (Async2Scheduler.delegate && Async2Scheduler.delegate !== this) {
-        return Async2Scheduler.delegate.now();
+      if (MyAsyncScheduler.delegate && MyAsyncScheduler.delegate !== this) {
+        return MyAsyncScheduler.delegate.now();
       } else {
         return now();
       }
@@ -34,14 +34,14 @@ export class Async2Scheduler extends Scheduler {
   }
 
   public schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: T): Subscription {
-    if (Async2Scheduler.delegate && Async2Scheduler.delegate !== this) {
-      return Async2Scheduler.delegate.schedule(work, delay, state);
+    if (MyAsyncScheduler.delegate && MyAsyncScheduler.delegate !== this) {
+      return MyAsyncScheduler.delegate.schedule(work, delay, state);
     } else {
       return super.schedule(work, delay, state);
     }
   }
 
-  public flush(action: Async2Action<any>): void {
+  public flush(action: MyAsyncAction<any>): void {
 
     const {actions} = this;
 

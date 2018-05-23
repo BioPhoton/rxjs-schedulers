@@ -1,4 +1,4 @@
-import {Async2Scheduler} from './AudioContextScheduler';
+import {MyAsyncScheduler} from './MyAsyncScheduler';
 import {Action} from 'rxjs/internal/scheduler/Action';
 import {SchedulerAction, Subscription} from 'rxjs/index';
 
@@ -7,14 +7,14 @@ import {SchedulerAction, Subscription} from 'rxjs/index';
  * @ignore
  * @extends {Ignored}
  */
-export class Async2Action<T> extends Action<T> {
+export class MyAsyncAction<T> extends Action<T> {
 
   public id: any;
   public state: T;
   public delay: number;
-  protected pending: boolean = false;
+  protected pending = false;
 
-  constructor(protected scheduler: Async2Scheduler,
+  constructor(protected scheduler: MyAsyncScheduler,
               protected work: (this: SchedulerAction<T>, state?: T) => void) {
     super(scheduler, work);
   }
@@ -67,11 +67,11 @@ export class Async2Action<T> extends Action<T> {
     return this;
   }
 
-  protected requestAsyncId(scheduler: Async2Scheduler, id?: any, delay: number = 0): any {
+  protected requestAsyncId(scheduler: MyAsyncScheduler, id?: any, delay: number = 0): any {
     return setInterval(scheduler.flush.bind(scheduler, this), delay);
   }
 
-  protected recycleAsyncId(scheduler: Async2Scheduler, id: any, delay: number = 0): any {
+  protected recycleAsyncId(scheduler: MyAsyncScheduler, id: any, delay: number = 0): any {
     // If this action is rescheduled with the same delay time, don't clear the interval id.
     if (delay !== null && this.delay === delay && this.pending === false) {
       return id;
