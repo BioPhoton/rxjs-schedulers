@@ -1,19 +1,21 @@
-import {Scheduler, SchedulerLike, Subscription} from 'rxjs/index';
+import {
+  Scheduler, SchedulerAction, SchedulerLike,
+  Subscription
+} from 'rxjs/index';
 import {Action} from 'rxjs/internal/scheduler/Action';
-import {SchedulerAction} from 'rxjs/internal/types';
 
-export class Scheduler2 extends Scheduler implements SchedulerLike {
+export class Scheduler implements SchedulerLike {
 
-  constructor(SchedulerAction: typeof Action) {
-    super(SchedulerAction, () => this.now() );
-    console.log('AudioContextClockScheduler Action Class');
+  public static now: () => number = Date.now ? Date.now : () => +new Date();
+
+  constructor(private SchedulerAction: typeof Action,
+              now: () => number = Scheduler.now) {
+    this.now = now;
   }
 
-  now = (): number => {
-    return Date.now();
-  }
+  public now: () => number;
 
-  schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: any): Subscription {
-    return new Subscription(); // new this.SchedulerAction<T>(this, work).schedule(state, delay);
+  public schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: T): Subscription {
+    return new this.SchedulerAction<T>(this, work).schedule(state, delay);
   }
 }

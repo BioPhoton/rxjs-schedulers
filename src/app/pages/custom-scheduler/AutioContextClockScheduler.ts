@@ -13,6 +13,6 @@ export class AudioContextClockScheduler implements SchedulerLike {
   }
 
   schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: any): Subscription {
-    return new this.SchedulerAction<T>(this, work).schedule(state, delay);
+    return new Subscription(); // new this.SchedulerAction<T>(this, work).schedule(state, delay);
   }
 }
