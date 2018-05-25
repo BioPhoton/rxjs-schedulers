@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
-import {asyncScheduler, of} from 'rxjs/index';
-import {observeOn} from 'rxjs/internal/operators';
-import {MyAsyncAction} from './MyAsyncAction';
-import {MyAsyncScheduler} from './MyAsyncScheduler';
-import {Scheduler2} from './Scheduler2';
+import {asyncScheduler, interval, of} from 'rxjs/index';
+import {tap} from 'rxjs/internal/operators';
+import {QueueAction} from 'rxjs/internal/scheduler/QueueAction';
+import {map, observeOn, take} from 'rxjs/operators';
+import {MyAsyncAction, MyAsyncScheduler, Scheduler2} from './schedulers/index';
+import {OfflineAudioContextScheduler} from './schedulers/OfflineAudioContextScheduler';
+import {offlineAudioContext as offlineAudioContextScheduler} from './schedulers/offlineAudioContext';
 
 @Component({
   selector: 'custom-scheduler',
@@ -11,7 +13,11 @@ import {Scheduler2} from './Scheduler2';
 })
 export class CustomSchedulerComponent {
 
-  constructor() { }
+  maxNamOfExecutions = 10;
+
+  constructor() {
+
+  }
 
   builtInScheduler() {
     of('builtInScheduler')
@@ -28,8 +34,50 @@ export class CustomSchedulerComponent {
 
   customScheduler() {
 
-    // audioContextClockScheduler
-    //  .schedule(() => { console.log('In my scheduler'); }, 0, 'state');
+    new Scheduler2(QueueAction)
+      .schedule((state) => {
+        console.log('In my scheduler', state);
+      }, 0, 'state');
   }
 
+
+  scheduleWorkOverOfflineAudioContextScheduler() {
+
+  }
+
+  disposeScheduledOverOfflineAudioContextSchedulerWork() {
+
+  }
+
+  audioContextSchedule() {
+    const work = () => {
+      console.log('audioContextScheduleButUnsubscribe: ', offlineAudioContextScheduler.now())
+    };
+    const delay = 100;
+    const state = 42;
+
+    offlineAudioContextScheduler
+      .schedule(work, delay, state);
+  }
+
+  audioContextScheduleButUnsubscribe() {
+    const work = () => {
+      console.log('audioContextScheduleButUnsubscribe: ', offlineAudioContextScheduler.now())
+    };
+    const delay = 900;
+    const state = 42;
+
+    const sub = offlineAudioContextScheduler.schedule(work, delay, state);
+
+    const intId = setInterval(() => {
+      sub.unsubscribe();
+      clearInterval(intId);
+    }, 100);
+  }
+
+  observableOverAudioContext() {
+    of('AUDIO_CONTEXT')
+      .pipe(observeOn(offlineAudioContextScheduler, 100.5))
+      .subscribe(console.log)
+  }
 }

@@ -46,6 +46,6 @@ There is a prioritisation of execution between the different lines.
 First we execute all synchronous tasks. 
 
 After that we execute all tasks our micro tasks which are promises. 
-Micro tasks are executet as fast as possible after our synchronous code.
+Micro tasks are executed as fast as possible after our synchronous code.
 
 After this the macro tasks are executed which are related to a setTimeout, setInterval, Events or other stuff that is placed in the eventloop. 
