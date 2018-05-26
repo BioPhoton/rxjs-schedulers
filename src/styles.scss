@@ -16,3 +16,11 @@ body { margin: 0; }
     float: left;
   }
 }
+
+.button-col {
+  display: flex;
+  flex-direction: column;
+  button {
+    margin-right: 5px;
+  }
+}

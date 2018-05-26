@@ -1,3 +1,3 @@
 import {OfflineAudioContextScheduler} from './OfflineAudioContextScheduler';
 
-export const offlineAudioContext = new OfflineAudioContextScheduler();
+export const offlineAudioContextScheduler = new OfflineAudioContextScheduler();
