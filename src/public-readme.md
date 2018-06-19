@@ -14,7 +14,7 @@ In this article you will learn about:
 - General responsibilities of schedulers
 - Basic usage in static as well as instance operators
 - The individual schedulers in detail
-  - Caveat when using delay with schedulers
+  - Caveat when using a delay with schedulers
 - Internal building blocks of schedulers
 - How to use scheduler manually
   - Schedulers and subscription handling
@@ -462,7 +462,7 @@ depends on the business of the browser.
 
 You can use this scheduler to create smooth browser animations.
 
-### Caveat when using delay with schedulers
+### Caveat when using a delay with schedulers
 
 
 
