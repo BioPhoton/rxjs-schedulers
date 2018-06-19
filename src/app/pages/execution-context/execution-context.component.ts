@@ -6,9 +6,12 @@ import {
   asyncScheduler,
   queueScheduler,
   interval,
-  of
+  of, timer, range
 } from 'rxjs';
-import {map, observeOn, subscribeOn} from 'rxjs/internal/operators';
+import {
+  map, mapTo, observeOn, subscribeOn,
+  take
+} from 'rxjs/internal/operators';
 import {QueueAction} from 'rxjs/internal/scheduler/QueueAction';
 import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
 
@@ -19,8 +22,30 @@ import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
 export class ExecutionContextComponent {
 
   constructor() {
+    timer(0, queueScheduler)
+      .pipe(
+        mapTo('1) observable timer'),
+        take(1)
+      )
+      .subscribe(console.log);
+
+    of(0)
+      .pipe(
+        observeOn(asyncScheduler),
+        mapTo('2) observable of')
+      )
+      .subscribe(console.log);
+
+    range(0,Number.POSITIVE_INFINITY)
+      .pipe(
+        mapTo('3) observable range'),
+        take(1)
+      )
+      .subscribe(console.log);
+
+
     // 1
-    this.introDemo();
+    // this.introDemo();
     // 2
     // this.executionOrder();
     // 3
@@ -28,6 +53,27 @@ export class ExecutionContextComponent {
   }
 
   introDemo() {
+    of(0)
+      .pipe(
+        observeOn(asyncScheduler),
+        mapTo('obseravble of')
+      )
+      .subscribe(console.log)
+
+    range(0,Number.POSITIVE_INFINITY)
+      .pipe(
+        mapTo('obseravble range'),
+        take(1)
+      )
+      .subscribe(console.log)
+
+    timer(0, queueScheduler)
+      .pipe(
+        mapTo('obseravble timer'),
+        take(1)
+      )
+      .subscribe(console.log)
+
     requestAnimationFrame(
       () => console.log('1 animation frame'));
 
