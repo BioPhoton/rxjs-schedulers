@@ -22,28 +22,6 @@ import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
 export class ExecutionContextComponent {
 
   constructor() {
-    timer(0, queueScheduler)
-      .pipe(
-        mapTo('1) observable timer'),
-        take(1)
-      )
-      .subscribe(console.log);
-
-    of(0)
-      .pipe(
-        observeOn(asyncScheduler),
-        mapTo('2) observable of')
-      )
-      .subscribe(console.log);
-
-    range(0,Number.POSITIVE_INFINITY)
-      .pipe(
-        mapTo('3) observable range'),
-        take(1)
-      )
-      .subscribe(console.log);
-
-
     // 1
     // this.introDemo();
     // 2

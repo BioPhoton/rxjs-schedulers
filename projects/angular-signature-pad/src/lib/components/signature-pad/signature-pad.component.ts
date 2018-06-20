@@ -292,7 +292,8 @@ export class SignaturePadComponent implements OnInit, OnChanges, AfterViewInit {
 
     // adopt canvas scales
     this.canvas.width = (newCanvasWidth - withToSubtract) * ratio;
-    this.canvas.height = (newCanvasHeight - heightToSubtract - 0) * ratio; // @TODO find the 6px
+
+    this.canvas.height = (newCanvasHeight - heightToSubtract - 4 ) * ratio; // @TODO find the 6px
     this.canvas.getContext('2d').scale(ratio, ratio);
 
     // adopt show/hide scroll of vertical canvas container
