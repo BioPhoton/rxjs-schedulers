@@ -29,6 +29,7 @@ To explain execution context i will question and answer 3 things:
 - What is the default execution context of an observable?
 
 ### What is execution context and a tasks/job in javascript? 
+
 Instead of giving you som high level explanations i will start with some examples that we al know and hat. 
 **The setTimeout fix** 
 
@@ -214,7 +215,7 @@ For now we learned a lot about the execution context of RxJS operators and obser
 RxJS produces it's events internally over schedulers. 
 As you already know we can parametrize our operators and observables to use other then their default scheduler.
 
-Here you can see the usage of a static and an instance operator. 
+Here you can see the usage of static and instance operator. 
 
 ```typescript
 
@@ -222,6 +223,11 @@ Here you can see the usage of a static and an instance operator.
 
 
 ## General responsibilities of schedulers
+
+A scheduler is a piece of logic that helps us to parametrize concurrency.
+
+Or a bit easier to understand: 
+A scheduler is a piece of logic that helps us to decide where and how stuff is executed.
 
 The responsibilities of schedulers in RxJS fall into 3 categories:
 - Context of execution
@@ -454,16 +460,216 @@ Use AsyncScheduler to execute code at some point in the future.
 **AnimationFrameScheduler**
 
 The AnimationFrameScheduler as well as it's root the 
-requestAnimationFrame function execute stuff whenever 
+requestAnimationFrame function executes stuff whenever 
 the browser will trigger the next pain action.
 
 This moment is not known by the browser or programmer and 
 depends on the business of the browser.
 
-You can use this scheduler to create smooth browser animations.
+If 0 delay is applied you can use this scheduler to create smooth browser animations.
 
 ### Caveat when using a delay with schedulers
 
+In all the above descriptions I used the phrase "If 0 delay is applied..." very often.
+This is extremely important and critical as a delay is changing the behaviour of schedulers in unexpected ways.
 
+Lets see what happens if we use a delay on a single value observable:
 
+```typescript
+const delay = 1;
+const obs$ = of(42);
+
+obs$.pipe(observeOn(animationFrameScheduler, delay))
+  .subscribe(v => console.log('5 observable animationFrame', v));
+obs$.pipe(observeOn(asyncScheduler, delay))
+  .subscribe(v => console.log('4 observable async', v));
+obs$.pipe(observeOn(asapScheduler, delay))
+  .subscribe(v => console.log('3 observable asap', v));
+obs$.pipe(observeOn(queueScheduler, delay))
+  .subscribe(v => console.log('1 observable queue', v));
+obs$
+  .subscribe(v => console.log('2 observable default', v));
+
+```
+
+If we compare the output with the similar one from above we see that if we apply a delay of just 1ms everything changes.
+If we think about the output we could guess that the executed code (beside the default observable) is running async.
+
+```console
+2 observable default
+5 observable animationFrame
+3 observable asap
+4 observable async
+1 observable queue
+```
+
+Why is that the case???
+
+!
+Every scheduler extends in the basic scheduler class. 
+All scheduler but the Async scheduler it self extend from
+the `AsyncScheduler` class.
+!
+
+I ran into this problem some weeks ago. 
+I was trying to test a RxJS animations in the browser and proof that it still runs smooth even if the browser is under pressure.
+
+After some tests I realized I used AnimationFrameScheduler completely wrong. 
+And I bet you also do it wrong!
+
+Often we see something like this:
+```typescript
+const FPS = 60;
+const animationInterval = interval(1000/FPS, animationFrameScheduler)
+  .subscribe(
+    (n) => {
+      // Do animamtion stuff here 60 times per second
+    }
+  )
+```
+
+The goal here is to create an Interval of 60 frames per second that is running on the browsers animationFrame.
+At the beginning this looks totals sane but if we think about the previous code example we quickly realize that
+this code can not be running on the animationFrame because we use a delay, or in this case an interval.
+
+Let's take a look into the sourcecode and see the real reason for this problem:
+
+```typescript
+export class AnimationFrameAction<T> extends AsyncAction<T> {
+
+  //...
+
+  protected requestAsyncId(scheduler: AnimationFrameScheduler, id?: any, delay: number = 0): any {
+    // If delay is greater than 0, request as an async action.
+    if (delay !== null && delay > 0) {
+      return super.requestAsyncId(scheduler, id, delay);
+    }
+    
+    //...
+  }
+  
+  //...
+
+}
+```
+
+We can see that the `AnimationFrameAction` extends `AsyncAction`, 
+and if we apply a delay that is not null and greater than 0 the action automatically falls back to an AsyncAction.
+
+So the right way to use AnimationFrameScheduler is like this:
+
+```typescript
+```typescript
+const animationInterval = interval(0, animationFrameScheduler)
+  .subscribe(
+    (n) => {
+      // Do animamtion stuff here whenever the browser is ready to paint.
+    }
+  )
+```
+
+## Internal building blocks of schedulers
+
+In this chapter I will explain what happens under the hood.
+
+A scheduler
+schedule/execute work
+over actions
+At a specific time in a
+controlled execution
+context
+Which you can
+unsubscribe from.
+
+I divide the internal buildings blocks of a scheduler into 4 parts:
+
+- Work
+- Action
+- Subscription
+- Scheduler
+
+Let's walk through all the parts step by step.
+
+### Work
+
+What is work? 
+
+Work is just some function that takes state and does something.
+It is the functions that contains the code that should be scheduled over the a scheduler.
+
+```typescript
+const work = function (state) {
+  console.log('Working, working, working, working, working!');
+}
+```
+
+### Action
+A Action is the execution context of the work. 
+The action is the works context and controls at which moment the work is executed.
+ 
+In short action executes work in an execution 
+context by calling it's `schedule` method.
+It returns a subscription that is passed back to the schedulers
+schedule method and the schedulers scheduler method in turn returns 
+this subscription to the caller.
+
+This subscription can later on be unsubscribed form. 
+
+We also know from the example above that the AnimationFrameSchedulers action 
+also can fall back to the AsyncSchedulers action if a delay is applied. 
+
+### Subscription
+
+I guess we all know how to subscribe and unsubscribe from an observable right?
+
+```typescript
+const sub = of('text')
+  .subscribe(onNext, onError, onComplete);
+
+sub.unsubscribe()
+```
+
+In the same way we can unsubscribe from the schedulers schedule subscription.
+
+```typescript
+const sub = queueScheduler
+  .schedule(work, delay, state);
+
+sub.unsubscribe();
+```
+
+There is no difference at all. However there is another function that unsubscribe that is part of a subscription.
+
+The `add` method. The `add` method is able to nest subscriptions and unsubscribe from all of them all im once.
+
+```typescript
+const sub = queueSchedluer
+.schedule(work1, delay, state);
+
+const sub2 = queueSchedluer
+.schedule(work2, delay, state);
+sub.add(sub2);
+
+// subscribe to many subscriptions
+sub.unsubscribe();
+```
+
+This is super useful if you schedule actions from within actions,
+which would i.e. happen if you do recursive scheduling.
+Then you need a way to stop all from one single subscription. 
+
+We now know that the returned subscriptions from actions get 
+nested into one single one internally before we return them.
+
+Let's go on with the whole scheduler.
+
+### Scheduler
+As we now have a good overview of all the different parts of 
+the scheduler we can walk through the several steps to use a scheduler manually.
+
+We will see how to:
+- get an instance of Scheduler
+- create work to schedule
+- use the .schedule method with work, delay, state parameter
+- unsubscribe from the returned subscription
 
