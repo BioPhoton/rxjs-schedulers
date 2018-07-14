@@ -1,6 +1,7 @@
 # RxJS Schedulers In-Depth
 
-INTRODUCTION **WHY** IM DOING THIS OR SUCH STUFF
+Sometimes you just wanna play around with some technology 
+without using it in production. That's what I here. Have fun! :-)
 
 In this article I will give you insights in a part of RxJS that is not well known at all or used, allthough RxJS would not extist without them.
 Schedulers are the producers of the events that we observe, transform and emmit in RxJs. They control the inner execution, timing and order. 
@@ -19,6 +20,7 @@ In this article you will learn about:
 - How to use scheduler manually
   - Schedule separate actions
   - Schedule recursively
+- Recap
 
 ## Execution context
 
@@ -447,7 +449,7 @@ Use it to move the execution of some code
 right after the current synchronous executed code ends.
 
 **AsyncScheduler**
-AsyncScheduler are useed to schedule tasks at some point in the future.
+AsyncScheduler are used to schedule tasks at some point in the future.
 The are executed as if you used setTimeout with some duration/delay
 This scheduler executes actions asynchronously. 
 They are executed as if they where wrapped into a setTimeout or interval. 
@@ -456,7 +458,6 @@ AsyncScheduler therefore execute stuff as macro tasks
 Use AsyncScheduler to execute code at some point in the future.
 
 **AnimationFrameScheduler**
-
 The AnimationFrameScheduler as well as it's root the 
 requestAnimationFrame function executes stuff whenever 
 the browser will trigger the next pain action.
@@ -467,9 +468,16 @@ depends on the business of the browser.
 If 0 delay is applied you can use this scheduler to create smooth browser animations.
 
 **VirtualTimeScheduler**
-TODO
+The `VirtualTimeScheduler`s big difference is 
+that you can configure it's notion of time.
+I. e. it can run any delay or duration in no time, faster or slower.
+
+
+
 
 **TestScheduler**
+Further more `TestScheduler` has some methods to create observables out of marble strings.
+
 TODO 
 
 ### Caveat when using a delay with schedulers
@@ -575,14 +583,9 @@ const animationInterval = interval(0, animationFrameScheduler)
 
 In this chapter I will explain what happens under the hood.
 
-A scheduler
-schedule/execute work
-over actions
-At a specific time in a
-controlled execution
-context
-Which you can
-unsubscribe from.
+A **scheduler** **schedules**/executes **work** over **actions**
+At a specific **time** in a controlled **execution context**
+Which you can later on **unsubscribe** from
 
 I divide the internal buildings blocks of a scheduler into 4 parts:
 
@@ -862,7 +865,25 @@ The goal here would be to have access to both, the actions scope as well as the 
 to be able to use the Actions `schedule` method as well as the components `log` method.
 
 
+# Recap
 
+After walking through all this parts about RxJS scheduler let's recap everything.
 
+We learned that we can execute tasks in the browser in different ways (execution contexts). 
+Instead of wrapping them in `setTimeouts` or `Promises`  and os on we can pass this task to schedulers.
 
+So schedulers are the piece of logic in RxJS that are responsible for emission, order and timing of values.
+We can use then in instance operators as params 
+and there are 2 static operators `observeOn` and `subscribeOn` that enable us to control the time of emission and the time of subscription.
+
+The provided schedulers in RxJS 4 basic once and 2 special once.
+The basic once are `QueueScheduler`, `AsapScheduler`, `AsyncScheduler` and `AnimationFrameScheduler`.
+Here the most important thing to know is, when you use a delay no matter what scheduler you used it will fall back to the `AsyncScheduler`.
+So use `AnimationFrameScheduler` only with delay of 0!
+
+The special once are `VirtualTimeScheduler` and `TestScheduler`
+Roughly the difference is that they have a configurable notion of time,
+meaning they can run time depending logic in no time at all, faster or slower.
+
+Further more `TestScheduler` has some methods to create observables out of marble strings.
 
