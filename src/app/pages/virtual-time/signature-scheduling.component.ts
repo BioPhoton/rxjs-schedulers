@@ -59,7 +59,7 @@ export class SignatureSchedulingComponent {
     });
   }
 
-  drawSignature(showImmediately?: boolean) {
+  _drawSignature(showImmediately?: boolean) {
     // get scheduler
     const scheduler = !showImmediately ? asyncScheduler : this.virtualTimeScheduler;
     // get values for animation
@@ -197,7 +197,7 @@ export class SignatureSchedulingComponent {
 
   }
 
-  fin_drawSignature(showImmediately) {
+  drawSignature(showImmediately) {
     // get scheduler
     const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
     // get values for animation

@@ -5,8 +5,9 @@ import {MorseCodeSchedulingComponent} from './morse-code-scheduling.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../../shared/shared.module';
 import {MatButtonModule, MatInputModule} from '@angular/material';
+import {RecursiveSchedulingComponent} from './recursive-scheduling/recursive-scheduling.component';
 
-const DECLARATIONS = [MorseCodeSchedulingComponent];
+const DECLARATIONS = [MorseCodeSchedulingComponent, RecursiveSchedulingComponent];
 const MAT_MODULES = [
   MatButtonModule, MatInputModule
 ];

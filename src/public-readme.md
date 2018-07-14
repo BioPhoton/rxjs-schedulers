@@ -17,9 +17,8 @@ In this article you will learn about:
   - Caveat when using a delay with schedulers
 - Internal building blocks of schedulers
 - How to use scheduler manually
-  - Schedulers and subscription handling
-  - Recursive scheduling 
-
+  - Schedule separate actions
+  - Schedule recursively
 
 ## Execution context
 
@@ -64,7 +63,6 @@ Instead of giving long explanations let's look at som code:
 
     console.log('4 sync task');
 ```
-
 
 As we ca see the order in code and the order in the console is completely different. 
 ```console
@@ -393,8 +391,8 @@ I'll divide them into 2 groups, Basic and special schedulers:
 - AnimationFrameScheduler
 
 **Special schedulers**
-- TestScheduler
 - VirtualTimeScheduler
+- TestScheduler
 
 Before i go into detail with every one of them let me show some code first:
 
@@ -468,6 +466,12 @@ depends on the business of the browser.
 
 If 0 delay is applied you can use this scheduler to create smooth browser animations.
 
+**VirtualTimeScheduler**
+TODO
+
+**TestScheduler**
+TODO 
+
 ### Caveat when using a delay with schedulers
 
 In all the above descriptions I used the phrase "If 0 delay is applied..." very often.
@@ -506,8 +510,8 @@ If we think about the output we could guess that the executed code (beside the d
 Why is that the case???
 
 !
-Every scheduler extends in the basic scheduler class. 
-All scheduler but the Async scheduler it self extend from
+Every scheduler extends from the basic scheduler class. 
+All schedulers but the Async scheduler it self extend from
 the `AsyncScheduler` class.
 !
 
@@ -558,7 +562,6 @@ and if we apply a delay that is not null and greater than 0 the action automatic
 
 So the right way to use AnimationFrameScheduler is like this:
 
-```typescript
 ```typescript
 const animationInterval = interval(0, animationFrameScheduler)
   .subscribe(
@@ -669,7 +672,197 @@ the scheduler we can walk through the several steps to use a scheduler manually.
 
 We will see how to:
 - get an instance of Scheduler
-- create work to schedule
+- create all params for the schedule method
 - use the .schedule method with work, delay, state parameter
 - unsubscribe from the returned subscription
+
+
+#### Instantiating a scheduler
+
+Here we can go the manual way or just use the predefined variables.
+
+Let's start with the manual way. 
+Use the Schedulers and Actions class to create a scheduler instance like this:
+
+```typescript
+// setup scheduler manually
+const scheduler = new QueueScheduler(QueueAction);
+```
+
+A way more would be to just ust the predefined variables. 
+Which is also what i would recommend:
+
+```typescript
+// use predefined
+const scheduler = queueScheduler || asyncScheduler || asapScheduler || animationFrameScheduler;
+```
+
+#### Setup params for the schedule method
+
+The schedule method takes 3 params: work, delay, state.
+
+- *work* is a function that will get scheduled.
+- *delay* is a variable, that specifies the amount of milliseconds the scheduling is delayed.
+- *state* is a value that is passed to the work function.
+
+```typescript
+  const delay = 0
+  const state = 42;
+  const work = (state) => {
+    console.log('initialState:', state);
+  };
+```
+
+#### Schedule work, with delay and state
+
+Now we can call the schedule method with the created parameters.
+This call will in turn return a function.
+
+```typescript
+queueScheduler.schedule(work, delay, state);
+```
+
+#### Unsubscribe from returned subscription
+
+As the `schedule` method of a scheduler, as well as the `subscribe` method from a observable return a `subscription object`.
+This subscription object can then be used to unsubscribe from the scheduled method later on.
+
+```typescript
+const subscription = queueScheduler.schedule(work, delay, state);
+subscription.unsubscribe();
+```
+
+# How to use schedulers manually
+
+In this chapter we will learn how to use a scheduler manually. 
+
+We will schedule separate actions as well as schedule actions recursively
+and handle subscriptions of both cases.
+
+## Schedule separate actions
+
+In this case we have an object of timestamps as keys and strings as values.
+
+We will iterate over this object an schedule all strings as a console.log at the specified timestamp.
+
+```typescript
+const timeMessageMap: {[key:number]: string} = {
+  71697398400000: 'one',
+  71697398404200: 'two',
+  71697398404242: 'three',
+  71697398420000: 'four',
+  71697398424200: 'fife'
+};
+
+Object.keys(timeMessageMap)
+  .forEach((key) => {
+    const work = console.log;
+    const delay = Date.now() - key;
+    const state = timeMessageMap[key];
+    
+    asyncScheduler.schedule(work, delay, state);
+  });
+```
+
+To also be able to stop everything we have to handel the returned subscriptions:
+
+```typescript
+const subscription = new Subscription();
+
+Object.keys(timeMessageMap)
+  .forEach((key) => {
+    // [...]
+    subscription.add(
+      asyncScheduler.schedule(work, delay, state);
+    );
+  });
+```  
+
+This enables us later on to unsubscribe from all scheduled actions at once:
+
+```typescript
+// [...]
+
+subscription.unsubscribe();
+```  
+
+## Schedule recursively
+
+To start with this example let me show you the component we will work in:
+
+```typescript
+import { Component } from '@angular/core';
+import {queueScheduler, Subscription} from 'rxjs';
+
+@Component({
+  selector: 'recursive-scheduling',
+  template: ``
+})
+export class RecursiveSchedulingComponent {
+  arrayOfStrings:string[] = ['a', 'b', 'c', 'd'];
+
+  constructor() {
+    this.recursiveScheduling(this.arrayOfStrings);
+  }
+  
+  recursiveScheduling(arr:string[]):Subscription {
+    const work = /* TO BE DEFINED */
+
+    return queueScheduler.schedule(work, 0, arr);
+  }
+  
+  log(val: any) {
+    console.log(val);
+  }
+}
+```
+
+Recursive scheduling means scheduling actions from within actions. 
+So the question here is how to get into an action?
+If we console.log the current scope/context of work or more explicit an action we would have 2 options:
+
+- Using a fat arrow function for work
+- Using a named or anonymous function for work
+
+Let's setup the work function for the arrow function approach:
+
+```typescript
+const work = (state: string[]) => {
+  console.log(this);
+};
+```
+
+we would see following logs in the console:
+`RecursiveSchedulingComponent {arrayOfStrings: Array(4)}`
+
+This means that the `this` in this case is the ComponentInstance it self. 
+We have access to all properties and methods of the component.
+
+Now let's change the fat arrow function to a anonymous function:
+
+```typescript
+const work = function(state: string[]) {
+  console.log(this);
+};
+```
+
+
+we would see following logs in the console:
+`QueueAction {closed: false, scheduler: QueueScheduler, …}`
+
+This means that the `this` in this case is the ActionInstance in the scheduler. 
+We have access to all properties and methods of the Action and have te ability to execute the 
+`Actions` `schedule` method like this:
+
+```typescript
+  Action.schedule(state, delay);
+```
+
+The goal here would be to have access to both, the actions scope as well as the components scope
+to be able to use the Actions `schedule` method as well as the components `log` method.
+
+
+
+
+
 
