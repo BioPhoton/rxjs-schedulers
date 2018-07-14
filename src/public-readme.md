@@ -468,17 +468,76 @@ depends on the business of the browser.
 If 0 delay is applied you can use this scheduler to create smooth browser animations.
 
 **VirtualTimeScheduler**
-The `VirtualTimeScheduler`s big difference is 
-that you can configure it's notion of time.
-I. e. it can run any delay or duration in no time, faster or slower.
+The `VirtualTimeScheduler`s big difference is that you can configure it's notion of time.
+It can run any delay or duration in no time at all.
 
+Take a look at the following code. It sets up 2 intervals that log their ticks to the console.
+ 
+```
+  /**
+   * getEverySecond$
+   *
+   * Function that creates a interval of 2 ticks and logs them to the console with a configurable prefix.
+   * Optional you can pass a scheduler to be used for the `time` operator
+   *
+   * @param prefix {number}
+   * A string that is used to prefix the tick number logs
+   * @param scheduler {SchedulerLike}
+   * Scheduler to be used in the time operator. 
+   * Executes at different processes on the event loop.
+   * @returns {Observable<number>}
+   */
+  function getEverySecond$(prefix: string, scheduler?: SchedulerLike): Observable<number> {
+    return timer(0, 1000, scheduler ? scheduler : null)
+      .pipe(
+        tap(tickNr => console.log(prefix,':',tickNr)),
+        take(2)
+      );
+  }
+  const vTS = new VirtualTimeScheduler();
+  
+  const everySecond$ = getEverySecond$('noScheduler');
+  const everySecond2$ = getEverySecond$('virtualTime', vTS);
+```
 
+In the next lines we will subscribe to them and see the results in the console.
 
+```typescript
+  setTimeout(() => console.log('1 sec past!'), 1000);
+  everySecond$.subscribe();
+  everySecond2$.subscribe();
+  vTS.flush();    
+```
+
+The consoles output looks like this:
+
+```
+  virtualTime: 0
+  virtualTime: 1
+  
+  noScheduler: 0
+  1 sec past!
+  noScheduler: 1
+```
+
+Even if we specified an interval ov 1000 ms, the observable with the virtual time scheduler was executed in no time.
+The observable with o scheduler was working as expected in a 1000 ms interval.
 
 **TestScheduler**
 Further more `TestScheduler` has some methods to create observables out of marble strings.
 
-TODO 
+' ': Whitespace no longer advances time
+'-':
+'(': group Start
+')': group End
+'|': complete
+'^':
+'#':
+Units:
+'ms':
+'s':
+'m':
+
 
 ### Caveat when using a delay with schedulers
 
@@ -883,7 +942,7 @@ So use `AnimationFrameScheduler` only with delay of 0!
 
 The special once are `VirtualTimeScheduler` and `TestScheduler`
 Roughly the difference is that they have a configurable notion of time,
-meaning they can run time depending logic in no time at all, faster or slower.
+meaning they can run time depending logic in no time at all.
 
 Further more `TestScheduler` has some methods to create observables out of marble strings.
 

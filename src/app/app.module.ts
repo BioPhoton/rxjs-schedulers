@@ -6,14 +6,15 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {LayoutModule} from './layout/layout.module';
-import {CustomSchedulerComponent} from './pages/custom-scheduler/custom-scheduler.component';
+import {TestComponent} from './pages/test/test.component';
 
 const NG_ELEMENTS = [
   'elements'
 ];
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -41,13 +42,11 @@ const NG_ELEMENTS = [
         {
           path: 'custom-scheduler',
           loadChildren: './pages/custom-scheduler/custom-scheduler.module#CustomSchedulerModule'
-        }
-        /*
-         {
+        },
+        {
          path: 'test',
-         component: TestSchedulerComponent
-         }
-         */
+         component: TestComponent
+        }
       ],
       {
         preloadingStrategy: PreloadAllModules

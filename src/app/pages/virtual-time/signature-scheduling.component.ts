@@ -3,9 +3,11 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {
   animationFrameScheduler,
   asyncScheduler,
-  Subscription,
+  interval, Observable, ObservableInput, Observer, SchedulerLike,
+  Subscription, timer,
   VirtualTimeScheduler
-} from 'rxjs/index';
+} from 'rxjs';
+import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'signature-scheduling',
@@ -57,9 +59,11 @@ export class SignatureSchedulingComponent {
       signature: [],
       'signature-player': []
     });
+
+    this.smallDemo();
   }
 
-  _drawSignature(showImmediately?: boolean) {
+  drawSignature(showImmediately?: boolean) {
     // get scheduler
     const scheduler = !showImmediately ? asyncScheduler : this.virtualTimeScheduler;
     // get values for animation
@@ -67,7 +71,7 @@ export class SignatureSchedulingComponent {
     const startMs = new Date(signature[0][0].time).getTime();
 
     // reset
-     this.resetAnimatedSignature();
+    this.resetAnimatedSignature();
 
     // loop over the 2d array of the signature
     signature.forEach((segment, segmentIndex) => {
@@ -197,7 +201,7 @@ export class SignatureSchedulingComponent {
 
   }
 
-  drawSignature(showImmediately) {
+  _drawSignature(showImmediately) {
     // get scheduler
     const scheduler = showImmediately ? this.virtualTimeScheduler : animationFrameScheduler;
     // get values for animation
@@ -237,6 +241,40 @@ export class SignatureSchedulingComponent {
   }
 
   // Helpers ===================================================
+
+  smallDemo() {
+
+    /**
+     * getEverySecond$
+     *
+     * Function that creates a interval of 2 ticks and logs them to the console with a configurable prefix.
+     * Optional you can pass a scheduler to be used for the `time` operator
+     *
+     * @param prefix {number}
+     * A string that is used to prefix the tick number logs
+     * @param scheduler {SchedulerLike}
+     * Scheduler to be used in the time operator.
+     * Executes at different processes on the event loop.
+     * @returns {Observable<number>}
+     */
+    function getEverySecond$(prefix: string, scheduler?: SchedulerLike): Observable<number> {
+      return timer(0, 1000, scheduler ? scheduler : null)
+        .pipe(
+          tap(tickNr => console.log(prefix,':',tickNr)),
+          take(2)
+        );
+    }
+    const vTS = new VirtualTimeScheduler();
+
+    const everySecond$ = getEverySecond$('default');
+    const everySecond2$ = getEverySecond$('virtualTime', vTS);
+
+    setTimeout(() => console.log('1 sec past'), 1000);
+    everySecond$.subscribe();
+    everySecond2$.subscribe();
+    vTS.flush();
+
+  }
 
   private getDelayForPoint(point, startMs: number) {
     return new Date(point.time).getTime() - startMs;

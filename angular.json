@@ -253,8 +253,16 @@
             ],
             "scripts": [],
             "assets": [
-              "projects/elements/src/favicon.ico",
-              "projects/elements/src/assets"
+              {
+                "glob": "elements/src/favicon.ico",
+                "input": "projects",
+                "output": "/"
+              },
+              {
+                "glob": "elements/src/assets",
+                "input": "projects",
+                "output": "/"
+              }
             ]
           }
         },
@@ -360,8 +368,16 @@
             ],
             "scripts": [],
             "assets": [
-              "projects/elements/src/favicon.ico",
-              "projects/elements/src/assets"
+              {
+                "glob": "elements/src/favicon.ico",
+                "input": "projects",
+                "output": "/"
+              },
+              {
+                "glob": "elements/src/assets",
+                "input": "projects",
+                "output": "/"
+              }
             ]
           }
         },
