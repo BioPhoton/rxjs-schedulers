@@ -292,7 +292,6 @@ class Scheduler {
   }
   private now(): number;
 }
-
 ```
 
 ## Basic usage in static as well as instance operators
@@ -403,15 +402,19 @@ const delay = 0;
 const obs$ = of(42);
 
 obs$.pipe(observeOn(animationFrameScheduler, delay))
-  .subscribe(v => console.log('5 observable animationFrame', v));
+  .subscribe((v) => console.log('5 observable animationFrame', v));
+
 obs$.pipe(observeOn(asyncScheduler, delay))
-  .subscribe(v => console.log('4 observable async', v));
+  .subscribe((v) => console.log('4 observable async', v));
+
 obs$.pipe(observeOn(asapScheduler, delay))
-  .subscribe(v => console.log('3 observable asap', v));
+  .subscribe((v) => console.log('3 observable asap', v));
+
 obs$.pipe(observeOn(queueScheduler, delay))
-  .subscribe(v => console.log('1 observable queue', v));
+  .subscribe((v) => console.log('1 observable queue', v));
+
 obs$
-  .subscribe(v => console.log('2 observable default', v));
+  .subscribe((v) => console.log('2 observable default', v));
 
 ```
 
@@ -715,7 +718,7 @@ const sub2 = queueSchedluer
 .schedule(work2, delay, state);
 sub.add(sub2);
 
-// subscribe to many subscriptions
+// unsubscribe to many subscriptions
 sub.unsubscribe();
 ```
 
