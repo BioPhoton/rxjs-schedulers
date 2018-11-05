@@ -18,7 +18,7 @@
     ],
     "paths": {
       "angular-signature-pad": [
-        "dist/angular-signature-pad"
+        "projects/angular-signature-pad/src/public_api"
       ]
     }
   }
